@@ -2,6 +2,8 @@ var _express = require("express");
 var _path = require("path");
 var _open = require("open");
 
+/* eslint-disable no-console */
+
 var _myApp = _express();
 var _myPort = 9090;
 
