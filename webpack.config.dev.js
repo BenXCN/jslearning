@@ -8,7 +8,7 @@ export default {
   devtool: 'inline-source-map',
 /*
  * custom property no longer supported by webpack 2.0 onward...
- */
+ * */
   debug: true,
   noInfo: false, // verbose mode
   /* */
@@ -20,16 +20,16 @@ export default {
   output: {
     path: path.resolve(__dirname, 'src'), // no actual physical files will be creatd.
     publicPath: '/',                      // instead, webpack serve our build from memory
-    filename: 'bundle.js'
+    filename: 'bxbundle.js'
   },
   // need to include the loader plugin to allow custom property to work..
   plugins: [
-    /*
-    new _webpack.LoaderOptionsPlugin({
-      debug:true,
-      noInfo:false,
-    })
-    */
+  /*
+  new _webpack.LoaderOptionsPlugin({
+    debug:true,
+    noInfo:false,
+  })
+  */
   ],
   // regexp syntax: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp
   // / -> delimiter. \. -> match . instead of any char. $ -> the end of line.
@@ -44,6 +44,7 @@ export default {
       */
       {test: /\.js$/, exclude: /node_modules/, loaders: ['babel']},
       {test: /\.css$/, loaders: ['style-loader','css']}
+
     ]
   }
 }
