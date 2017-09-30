@@ -4,7 +4,7 @@
   "description": "JavaScript development environment Pluralsight course by Cory House",
   "scripts": {
     "prestart": "babel-node buildscripts/serverMessages.js",
-    "start": "npm-run-all security-check publish-1",
+    "start": "npm-run-all security-check publish",
     "security-check": "nsp check",
     "startServer": "babel-node buildscripts/srcServer.js",
     "localtunnel": "lt -p 9090 -s benxcn",
@@ -16,7 +16,11 @@
     "test:watch":"npm run test -- --watch",
     "genData": "babel-node buildscripts/generateMockData.js",
     "prestart-JsonSvr": "npm run genData",
-    "start-JsonSvr": "json-server --watch ./src/api/db.json --port 9091"
+    "start-JsonSvr": "json-server --watch ./src/api/db.json --port 9091",
+    "clean-dist": "rimraf ./dist && mkdir dist",
+    "prebuild": "npm-run-all clean-dist test lint",
+    "build": "babel-node buildscripts/build.js",
+    "postbuild": "babel-node buildscripts/distServer.js"
   },
   "author": "Cory House",
   "modified by": "BXCN",
