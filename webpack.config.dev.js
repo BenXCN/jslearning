@@ -3,6 +3,10 @@ import path from 'path';
  * required to get webpack >=2.0 to work, for the loader plug-in.
 import _webpack from 'webpack';
 */
+console.log("webpack.config.dev.js called"); // eslint-line-disabled no-console //
+/*
+ * this file is called by babel-node buildscripts/srcServer.js, line 18
+ */
 
 export default {
   devtool: 'inline-source-map',

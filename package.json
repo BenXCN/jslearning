@@ -4,17 +4,22 @@
   "description": "JavaScript development environment Pluralsight course by Cory House",
   "scripts": {
     "prestart": "babel-node buildscripts/serverMessages.js",
-    "start": "npm-run-all security-check publish",
+    "start": "npm-run-all security-check publish-1",
     "security-check": "nsp check",
     "startServer": "babel-node buildscripts/srcServer.js",
     "localtunnel": "lt -p 9090 -s benxcn",
-    "publish": "npm-run-all --parallel startServer localtunnel lint:watch test:watch",
+    "publish-1": "npm run startServer",
+    "publish": "npm-run-all --parallel startServer lint:watch test:watch",
     "lint": "esw webpack.config.* src buildscripts --color",
     "lint:watch": "npm run lint -- --watch",
     "test":"mocha --reporter progress buildscripts/testSetup.js \"src/**/*.test.js\"",
-    "test:watch":"npm run test -- --watch"
+    "test:watch":"npm run test -- --watch",
+    "genData": "babel-node buildscripts/generateMockData.js",
+    "prestart-JsonSvr": "npm run genData",
+    "start-JsonSvr": "json-server --watch ./src/api/db.json --port 9091"
   },
   "author": "Cory House",
+  "modified by": "BXCN",
   "license": "MIT",
   "dependencies": {
     "whatwg-fetch": "1.0.0"

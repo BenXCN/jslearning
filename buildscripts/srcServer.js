@@ -29,6 +29,7 @@ _myApp.use(_webpack_mw(_compiler, {
 
 _myApp.get("/", function(req, res){
   res.sendFile(_path.join(__dirname,'../src/index.html'));
+  console.log("_myApp.get(/) called");
 });
 
 _myApp.get('/users', function(req, res){
@@ -39,9 +40,12 @@ _myApp.get('/users', function(req, res){
     {"id":2, "firstName":"people2","lastName":"name2","email":"email2@email.com"},
     {"id":3, "firstName":"people3","lastName":"name3","email":"email3@email.com"}
   ]);
+  console.log("_myApp.get(/users) called");
 });
 
 _myApp.listen(_myPort, function(err){
+  console.log("_myApp.listen() called");
+
   if(err){
     console.log(err);
   }
