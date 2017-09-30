@@ -1,0 +1,129 @@
+1.	process.argv
+2.	console.log
+3.	Setting up a development toolset
+
+*** VERY KEY ***
+1. Java script is loaded in the order they are encountered when the navigator is parsing the source file.
+2. Run time order for this demo:
+   a. npm invokes the various scripts in the order defined in scripts section in file package.json
+   b. when invoking the startServer script, srcServer.js is called.
+   c. webpack.config.dev.js is then called by this script, to generate the bxbundle.js, making it availble to be downloaded upon request.
+   d. srcServer then fire up the Express server, and have it listen port 9090
+   e. all above steps runs on the server, and the server side of the console logs are printed.
+   ** - Server Side of pre-work completed - **
+
+   ** - Client side of action starts here - ** - In our demo, this is triggered by the callback function of listen method, but can also be triggered thru client browser.
+   a. User launch web browser, and access http://localhost
+   b. Express then invoke the get("/") method, and send user the index.html file.
+   c. User browser parse the index.html file, and found a reference to bxbundle.js, hence download it.
+   d. bxbundle then got invoked by web browser (and thus running on client machine, where the console log are shown)
+   e. the script then invoke a fetch call, on the client side, to fetch the API /user json file.
+   f. the script then populates the table based on element id.
+   g. the script then get the reference to the DEL links (based on classname), and loop thru it, and populate the onclick event handler
+   ** - Client side download completed - ** - waiting on further action from client.
+
+   ** - Client hits the DEL link - **
+   a. the web browser excute the onclick handler on client side, which then triggers a fetch call to server (Json-Server)
+   b. Json server handle the requests and send back response.
+   c. client side script updates the view using the removeChild method.
+
+1.	High level steps
+    a.	Source Code – github + git
+    b.	Editors – vscode
+    c.	Package Manager – npm
+    d.	Development Web Server – Express
+    e.	Automation – npm Scripts
+    f.	Transpiling – babel
+    g.	Bundling – webpack
+    h.	Linting – ESLint
+    i.	Test & CI – mocha, + two online platform that connects with github
+    j.	Mocking – Jason-Schema, faker.js, chance.js, and randexp.js, and jason server (in essence, it is to simulate server calls with randomly generated data based on pre-defined schema, and DB interaction with file modification)
+2.	Source code management
+
+    Stage all the files changed
+    git add .
+
+    F:\GitRepo\jslearning\jslearning>git add .
+
+    Commit changes locally
+    git commit -m “my comments”
+
+    F:\GitRepo\jslearning\jslearning>git commit -m "20170907"
+    [master 26de881] 20170907
+    9 files changed, 177 insertions(+)
+    create mode 100644 .babelrc
+    create mode 100644 .editorconfig
+    create mode 100644 buildscripts/serverMessages.js
+    create mode 100644 buildscripts/srcServer.js
+    create mode 100644 package.json
+    create mode 100644 src/index.css
+    create mode 100644 src/index.html
+    create mode 100644 src/index.js
+    create mode 100644 webpack.config.dev.js
+
+    Push up to github
+    git push
+
+    F:\GitRepo\jslearning\jslearning>git push // prompt for password: (double .)
+    Counting objects: 13, done.
+    Delta compression using up to 4 threads.
+    Compressing objects: 100% (12/12), done.
+    Writing objects: 100% (13/13), 2.99 KiB | 0 bytes/s, done.
+    Total 13 (delta 0), reused 0 (delta 0)
+    To https://github.com/BenXCN/jslearning.git
+      5e23b1a..26de881  master -> master
+
+3.	Share on internet
+4.	localtunnel
+    a.	npm install localtunnel -g
+    b.	// start your app
+    c.	lt –port <myport> [--subdomain <mypreferred prefix> (e.g.: lt -p 9090 -s benxcn, then the generated url will be http://benxcn.localtunnel.me if no one is using benxcn at the moment)
+5.	ngrok
+    a.	sign up
+    b.	install ngrok
+    c.	install authtoken
+    d.	start your app
+    e.	./ngrok http 80
+6.	now (works for any deployment based on node.js)
+    a.	npm install -g now
+    b.	//create start script
+    c.	now // this is what to be typed in the command line
+7.	surge(works on static files only)
+    a.	npm install -g surge
+    b.	surge
+8.	Change of node to babel-node to allow transpiling to work (transpiling means compiling the JS code (or other code) to an officially supported JavaScript version by most compilers)
+9.	JSON does not support commenting, but can do so if we pass json to JSMin before passing it to JSON decoder.
+10.	Bundling – basically to include only the needed code for a given page into a bundle, to improve performance (reduce download size)
+11.	Source Map – allow the generated code mapped back to the js source code. and this is only downloaded to client *IF* they enabled the F12 Dev Tools. (:) )
+12.	Linting – code inspection
+    {
+        "root": true, %denotes this is the root directory of the sources.
+        "extends": [
+          "eslint:recommended", %use recommended rules
+          "plugin:import/errors", %use enhanced linting for import plugins
+          "plugin:import/warnings"
+        ],
+        "parserOptions": {
+          "ecmaVersion": 7,
+          "sourceType": "module"
+        },
+        "env": {
+          "browser": true,
+        "node": true,
+          "mocha": true
+        },
+        "rules": { %% override default rules above
+
+        }
+      }
+13.	"lint": "esw webpack.config.* src buildscripts" <- monitor src, buildscripts folder, and all files in root that prefix with webpack.config.
+14.	npm run lint -- --watch (-- meaning pass anything after as a parameter to the lint script)
+    a.	http://javascript.ruanyifeng.com/nodejs/npm.html#toc12
+15.	Test & CI
+    a.	Three types: Unit, Integration, and UI (selenium). The course focus on Unit.
+    b.	Six step process: Framework -> Assertion Lib -> Helper Lib -> Where to run test -> where to place the test file -> when to run test
+    c.	http://chaijs.com/api/bdd/
+16.	HTTP compatibility view
+    a.	http://caniuse.com
+17.	Mocking
+    a.
